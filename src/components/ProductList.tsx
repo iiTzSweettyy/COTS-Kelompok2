@@ -3,18 +3,13 @@ import ProductCard from './ProductCard';
 
 interface ProductListProps {
     products: Product[];
-    onSelectProduct: (id: number) => void;
 }
 
-const ProductList = ({ products, onSelectProduct }: ProductListProps) => {
+const ProductList = ({ products }: ProductListProps) => {
     return (
-        <section className="product-grid" aria-label="Daftar Produk">
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6" aria-label="Daftar Produk">
             {products.map((item) => (
-                <ProductCard
-                    key={item.id}
-                    product={item}
-                    onSelectProduct={onSelectProduct}
-                />
+                <ProductCard key={item.id} product={item} />
             ))}
         </section>
     );

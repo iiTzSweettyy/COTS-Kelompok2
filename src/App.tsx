@@ -1,22 +1,41 @@
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CatalogPage from './pages/CatalogPage';
-import './App.css';
+import ProductDetailPage from './components/ProductDetailPage';
 
-function App() {
+const AppLayout = () => {
   return (
-    <div className="">
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
       <Navbar />
-      <CatalogPage />
-      <footer className="footer">
-        <div className="container">
-          <p>
-            &copy; 2026 Product Catalog App &mdash; Powered by React, TypeScript &amp;
-            DummyJSON
-          </p>
-        </div>
-      </footer>
+
+      <Outlet />
     </div>
   );
-}
+};
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+
+          <Route index element={<CatalogPage />} />
+
+          <Route path="product/:id" element={<ProductDetailPage />} />
+
+          <Route
+            path="*"
+            element={
+              <main className="pt-32 px-4 text-center">
+                <h1 className="text-4xl font-bold text-gray-800">404</h1>
+                <p className="text-gray-500 mt-2">Halaman tidak ditemukan.</p>
+              </main>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 export default App;
