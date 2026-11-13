@@ -8,7 +8,7 @@ interface ProductListProps {
 
 const ProductList = ({ products, onSelectProduct }: ProductListProps) => {
     return (
-        <section className="product-grid" aria-label="Daftar Produk">
+        <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" aria-label="Daftar Produk">
             {products.map((item) => (
                 <ProductCard
                     key={item.id}
