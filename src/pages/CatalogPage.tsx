@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, type FormEvent } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
     getProducts,
@@ -12,11 +13,11 @@ import ProductList from '../components/ProductList';
 import ProductSkeleton from '../components/ProductSkeleton';
 import Pagination from '../components/Pagination';
 import StatusMessage from '../components/StatusMessage';
-import DetailModal from '../components/DetailModal';
 
 const LIMIT = 12;
 
 const CatalogPage = () => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [total, setTotal] = useState<number>(0);
@@ -28,7 +29,6 @@ const CatalogPage = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState<string>('');
-    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -41,6 +41,17 @@ const CatalogPage = () => {
         };
         fetchCategories();
     }, []);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setActiveQuery(searchInput.trim());
+            if (searchInput.trim() !== activeQuery) {
+                setSkip(0);
+            }
+        }, 500);
+
+        return () => clearTimeout(timeoutId);
+    }, [searchInput, activeQuery]);
 
     const fetchProductData = useCallback(async () => {
         setIsLoading(true);
@@ -79,19 +90,18 @@ const CatalogPage = () => {
     }, [activeQuery, selectedCategory, skip]);
 
     useEffect(() => {
-        fetchProductData();
+        const initFetch = async () => {
+            await fetchProductData();
+        };
+
+        initFetch();
     }, [fetchProductData]);
 
-    const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setSelectedCategory('');
-        setSkip(0);
-        setActiveQuery(searchInput.trim());
+    const handleSearchInputChange = (value: string) => {
+        setSearchInput(value);
     };
 
     const handleCategoryChange = (slug: string) => {
-        setSearchInput('');
-        setActiveQuery('');
         setSkip(0);
         setSelectedCategory(slug);
     };
@@ -104,11 +114,10 @@ const CatalogPage = () => {
     };
 
     return (
-        <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <main className="pt-28 px-4 max-w-7xl mx-auto min-h-screen">
             <SearchFilterBar
                 searchInput={searchInput}
-                onSearchInputChange={setSearchInput}
-                onSearchSubmit={handleSearchSubmit}
+                onSearchInputChange={handleSearchInputChange}
                 categories={categories}
                 selectedCategory={selectedCategory}
                 onCategoryChange={handleCategoryChange}
@@ -136,7 +145,7 @@ const CatalogPage = () => {
                 <>
                     <ProductList
                         products={products}
-                        onSelectProduct={(id) => setSelectedProductId(id)}
+                        onSelectProduct={(id) => navigate(`/product/${id}`)}
                     />
                     <Pagination
                         skip={skip}
@@ -147,10 +156,6 @@ const CatalogPage = () => {
                 </>
             )}
 
-            <DetailModal
-                productId={selectedProductId}
-                onClose={() => setSelectedProductId(null)}
-            />
         </main>
     );
 };
