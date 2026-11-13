@@ -9,6 +9,7 @@ import {
 import type { Product, Category, ProductListResponse } from '../types/product';
 import SearchFilterBar from '../components/SearchFilterBar';
 import ProductList from '../components/ProductList';
+import ProductSkeleton from '../components/ProductSkeleton';
 import Pagination from '../components/Pagination';
 import StatusMessage from '../components/StatusMessage';
 import DetailModal from '../components/DetailModal';
@@ -103,7 +104,7 @@ const CatalogPage = () => {
     };
 
     return (
-        <main className="container main-content">
+        <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <SearchFilterBar
                 searchInput={searchInput}
                 onSearchInputChange={setSearchInput}
@@ -115,7 +116,7 @@ const CatalogPage = () => {
             />
 
             {isLoading ? (
-                <StatusMessage type="loading" message="Sedang mengambil katalog produk..." />
+                <ProductSkeleton count={LIMIT} />
             ) : errorMessage ? (
                 <StatusMessage
                     type="error"
