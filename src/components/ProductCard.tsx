@@ -29,7 +29,7 @@ const ProductCard = ({ product, onSelectProduct }: ProductCardProps) => {
                     className="btn btn-outline card-btn"
                     onClick={() => onSelectProduct(id)}
                 >
-                    Lihat Detail
+                    Lihat Detail Produk
                 </button>
             </div>
         </article>

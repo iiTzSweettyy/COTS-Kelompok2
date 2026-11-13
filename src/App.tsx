@@ -10,7 +10,7 @@ function App() {
       <footer className="footer">
         <div className="container">
           <p>
-            &copy; 2026 Product Catalog App &mdash; Powered by React, TypeScript &amp;
+            &copy; Kelompok2 catalog App &mdash; Powered by React, TypeScript &amp;
             DummyJSON
           </p>
         </div>

@@ -8,11 +8,11 @@ import type {
 
 const api = axios.create({
     baseURL: 'https://dummyjson.com',
-    timeout: 10000,
+    timeout: 100000,
 });
 
 export const getProducts = async ({
-    limit = 12,
+    limit = 13,
     skip = 0,
 }: PaginationParams = {}): Promise<ProductListResponse> => {
     const response = await api.get<ProductListResponse>(
@@ -39,7 +39,7 @@ export const getCategories = async (): Promise<Category[]> => {
 
 export const getProductsByCategory = async ({
     slug,
-    limit = 12,
+    limit = 13,
     skip = 0,
 }: PaginationParams & { slug: string }): Promise<ProductListResponse> => {
     const response = await api.get<ProductListResponse>(

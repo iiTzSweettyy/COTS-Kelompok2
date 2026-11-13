@@ -102,7 +102,7 @@ const DetailModal = ({ productId, onClose }: DetailModalProps) => {
 
                             <ul className="detail-specs">
                                 <li>
-                                    <strong>Status Ketersediaan:</strong> {product.availabilityStatus}{' '}
+                                    <strong>Status Barang Ready?:</strong> {product.availabilityStatus}{' '}
                                     (Stok: {product.stock})
                                 </li>
                                 <li>
@@ -112,7 +112,7 @@ const DetailModal = ({ productId, onClose }: DetailModalProps) => {
                                     <strong>Pengiriman:</strong> {product.shippingInformation}
                                 </li>
                                 <li>
-                                    <strong>Kebijakan Retur:</strong> {product.returnPolicy}
+                                    <strong>Peraturan Retur:</strong> {product.returnPolicy}
                                 </li>
                             </ul>
 
